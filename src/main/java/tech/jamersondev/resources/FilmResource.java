@@ -46,8 +46,8 @@ public class FilmResource {
     @GET
     @Path("/actors/{startsWith}")
     @Produces(MediaType.TEXT_PLAIN)
-    public String getNameActors(String startsWith) {
-        return filmRepository.listActors(startsWith)
+    public String getNameActors(String startsWith, short maxLengthFilm) {
+        return filmRepository.listActors(startsWith, maxLengthFilm)
                 .map(f -> String.format("%s (%d min): %s", f.getTitle(), f.getLength(),
                         f.getActors().stream()
                                 .map(a -> String.format("%s %s", a.getFirstName(), a.getLastName()))

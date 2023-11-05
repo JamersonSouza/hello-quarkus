@@ -39,10 +39,10 @@ public class FilmRepository {
                 .sorted(Film$.length);
     }
 
-    public Stream<Film> listActors(String nameActorStartWith){
+    public Stream<Film> listActors(String nameFilmStartWith, short maxLengthFilm){
         final StreamConfiguration<Film> scJoining = StreamConfiguration.of(Film.class).joining(Film$.actors);
         return jpaStreamer.stream(scJoining)
-                .filter(Film$.title.startsWith(nameActorStartWith))
+                .filter(Film$.title.startsWith(nameFilmStartWith).and(Film$.length.lessThan(maxLengthFilm)))
                 .sorted(Film$.length.reversed());
     }
 
