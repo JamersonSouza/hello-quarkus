@@ -2,6 +2,7 @@ package tech.jamersondev.repository;
 
 import com.speedment.jpastreamer.application.JPAStreamer;
 import com.speedment.jpastreamer.projection.Projection;
+import com.speedment.jpastreamer.streamconfiguration.StreamConfiguration;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import tech.jamersondev.model.Film;
@@ -38,5 +39,11 @@ public class FilmRepository {
                 .sorted(Film$.length);
     }
 
+    public Stream<Film> listActors(String nameActorStartWith){
+        final StreamConfiguration<Film> scJoining = StreamConfiguration.of(Film.class).joining(Film$.actors);
+        return jpaStreamer.stream(scJoining)
+                .filter(Film$.title.startsWith(nameActorStartWith))
+                .sorted(Film$.length.reversed());
+    }
 
 }
