@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -60,6 +62,15 @@ public class Film {
     @Basic
     @Column(name = "last_update")
     private Timestamp lastUpdate;
+
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(
+            name = "film_actor",
+            joinColumns = {@JoinColumn(name = "film_id")},
+            inverseJoinColumns = {@JoinColumn(name = "actor_id")}
+    )
+    private List<Actor> actors = new ArrayList<>();
+
 
     public Film() {
     }
@@ -158,6 +169,14 @@ public class Film {
 
     public void setLastUpdate(Timestamp lastUpdate) {
         this.lastUpdate = lastUpdate;
+    }
+
+    public List<Actor> getActors() {
+        return actors;
+    }
+
+    public void setActors(List<Actor> actors) {
+        this.actors = actors;
     }
 
     @Override
