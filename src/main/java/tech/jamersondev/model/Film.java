@@ -74,6 +74,11 @@ public class Film {
 
     public Film() {
     }
+    public Film(short filmId, String title, Short length) {
+        this.filmId = filmId;
+        this.title = title;
+        this.length = length;
+    }
 
     public short getFilmId() {
         return filmId;
